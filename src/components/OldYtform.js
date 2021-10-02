@@ -14,6 +14,25 @@ function YtForm() {
         console.log('Form values', values)
     }
 
+    const validate = values => {
+        let errors = {}
+
+        if (!values.name) {
+            errors.name = 'Required'
+        }
+
+        if (!values.email) {
+            errors.email = 'Required'
+        } else if (!/^[A-z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            errors.email = 'Invalid Email'
+        }
+
+        if (!values.channal) {
+            errors.channal = 'Required'
+        }
+
+        return errors
+    }
 
     const validationSchema = Yup.object({
         name: Yup.string().required('Required'),
@@ -24,6 +43,7 @@ function YtForm() {
     const formik = useFormik({
         initialValues,
         onSubmit,
+        // validate
         validationSchema
     })
 
